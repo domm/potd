@@ -54,7 +54,7 @@ date: $publish_date
 converter: textile
 template: potd.tt
 
-EOBLIO
+    EOBLIO
 }
 
 sub publish($target_img, $target_txt, $basename) {
