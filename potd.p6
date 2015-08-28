@@ -45,7 +45,7 @@ sub MAIN ($file, Int :$offset = 1, Bool :$local) {
     build_local($blio) if $local;
 }
 
-sub post_template(Str $basename) {
+sub post_template (Str $basename) {
     my $publish_date = $basename ~ 'T10:00:00';
     return qq:to/EOBLIO/;
 title: 
@@ -57,7 +57,7 @@ template: potd.tt
     EOBLIO
 }
 
-sub publish($target_img, $target_txt, $basename) {
+sub publish ($target_img, $target_txt, $basename) {
    chdir($target_img.dirname);
    my @commands =
        "git add $target_img $target_txt",
@@ -68,7 +68,7 @@ sub publish($target_img, $target_txt, $basename) {
    }
 }
 
-sub build_local($blio) {
+sub build_local ($blio) {
    chdir( $blio );
    say "starting to build local website";
    shell './build_t430 --nosched > /dev/null';
