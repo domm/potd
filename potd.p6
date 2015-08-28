@@ -29,7 +29,7 @@ sub MAIN ($file, Int :$offset = 1, Bool :$local) {
     my $target_txt = $potd_src.child( $basename ~ '.txt' );
     my $archive_img = $home.child('media/fotos/2015/potd/' ~ $basename ~ '.jpg');
 
-    if ($target_img.e) {
+    if $target_img.e {
         say "target $basename.jpg already exists, aborting";
         exit;
     }
