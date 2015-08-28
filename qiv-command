@@ -1,0 +1,12 @@
+#!/usr/bin/env perl6
+
+sub MAIN ($action, $in) {
+    my $filename = $in;
+    $filename ~~ s:g/['/' | '..']+/_/;
+    $filename ~~ s:g/_+/_/;
+    $filename ~~ s:g/^_//;
+
+    my $out = $*SPEC.catfile('/home/domm/media/fotos/select/', $action, $filename);
+    copy $in, $out;
+}
+
