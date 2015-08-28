@@ -2,7 +2,6 @@
 use File::HomeDir;
 
 sub MAIN ($file, Int :$offset = 1, Bool :$local) {
-    my $raw = $*SPEC.catfile($file); ## ??
     die "No such file $file" unless $file.IO.e;
 
     my $date = Date.today() + $offset;
