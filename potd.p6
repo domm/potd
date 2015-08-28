@@ -1,3 +1,16 @@
+# take an jpg and maybe an --offset
+# rename the file to YYYY-MM-DD.jpg
+# create a textfile with a similar name at the right location
+# open the textfile for editing in vim
+# call an Perl5 script that will resize the image and rotate it (if EXIF says so)
+#    (no idea if this could be done in Perl6)
+# issue some git-commands to upload the new files
+# maybe issue some commands to rebuild the website on the local machine (if --local)
+
+# more info:
+#  http://domm.plix.at/perl/2015_01_potd_helper_script.html
+#  http://domm.plix.at/talks/2015_dresden_potd/
+
 
 use File::HomeDir;
 
