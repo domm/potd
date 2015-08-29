@@ -19,6 +19,7 @@ sub MAIN ($file, Int :$offset = 1, Bool :$local) {
     my $date = Date.today() + $offset;
 
     my $ok = prompt("Createing POTD for $date, ok? ");
+    exit if $ok ~~ m:i/^n/;
 
     my $home = File::HomeDir.new.my_home.IO;
     my $blio = $home.child('privat/domm.plix.at');
