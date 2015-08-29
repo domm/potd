@@ -29,13 +29,8 @@ sub MAIN ( $file, Int :$offset = 1, Bool :$local ) {
     my $target_txt = $blio.child( 'src/potd/' ~ $date ~ '.txt' );
     my $archive    = $home.child( 'media/fotos/2015/potd/' ~ $date ~ '.jpg' );
 
-    if $target_img.e {
-        say "target $date.jpg already exists, aborting";
-        exit;
-    }
-
     my $template = template( $date );
-    spurt( $target_txt, $template );
+    spurt( $target_txt, $template, :createonly );
     shell "vim $target_txt";
 
     shell "potd_handle_image.pl $file $target_img $archive";
