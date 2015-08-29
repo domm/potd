@@ -46,12 +46,13 @@ sub MAIN ($file, Int :$offset = 1, Bool :$local) {
 sub template (Date $date) {
     my $publish_datetime = $date ~ 'T10:00:00';
     return qq:to/EOBLIO/;
-title: 
-tweet: 
-date: $publish_date
-converter: textile
-template: potd.tt
-
+    title: 
+    tweet: 
+    date: $publish_datetime
+    converter: textile
+    template: potd.tt
+    
+    
     EOBLIO
 }
 
