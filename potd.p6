@@ -1,3 +1,5 @@
+#!/usr/bin/env perl6
+
 # take an jpg and maybe an --offset
 # rename the file to YYYY-MM-DD.jpg
 # create a textfile with a similar name at the right location
@@ -13,20 +15,20 @@
 
 use File::HomeDir;
 
-sub MAIN ($file, Int :$offset = 1, Bool :$local) {
+sub MAIN ( $file, Int :$offset = 1, Bool :$local ) {
     die "No such file $file" unless $file.IO.e;
 
-    my $date = Date.today() + $offset;
+    my $date = Date.today + $offset;
 
-    my $ok = prompt("Createing POTD for $date, ok? ");
+    my $ok = prompt( "Createing POTD for $date, ok? " );
     exit if $ok ~~ m:i/^n/;
 
-    my $home = File::HomeDir.new.my_home.IO;
-    my $blio = $home.child('privat/domm.plix.at');
-    my $potd_src = $blio.child('src/potd');
+    my $home       = File::HomeDir.new.my_home.IO;
+    my $blio       = $home.child( 'privat/domm.plix.at' );
+    my $potd_src   = $blio.child( 'src/potd' );
     my $target_img = $potd_src.child( $date ~ '.jpg' );
     my $target_txt = $potd_src.child( $date ~ '.txt' );
-    my $archive_img = $home.child('media/fotos/2015/potd/' ~ $date ~ '.jpg');
+    my $archive    = $home.child( 'media/fotos/2015/potd/' ~ $date ~ '.jpg' );
 
     if $target_img.e {
         say "target $date.jpg already exists, aborting";
@@ -34,17 +36,17 @@ sub MAIN ($file, Int :$offset = 1, Bool :$local) {
     }
 
     my $template = template( $date );
-    spurt($target_txt, $template);
+    spurt( $target_txt, $template );
     shell "vim $target_txt";
 
-    shell "potd_handle_image.pl $file $target_img $archive_img";
+    shell "potd_handle_image.pl $file $target_img $archive";
 
-    publish($target_img, $target_txt, $date);
+    publish( $target_img, $target_txt, $date );
 
-    build_local($blio) if $local;
+    build_local( $blio ) if $local;
 }
 
-sub template (Date $date) {
+sub template ( Date $date ) {
     my $publish_datetime = $date ~ 'T10:00:00';
     return qq:to/EOBLIO/;
     title: 
@@ -57,8 +59,8 @@ sub template (Date $date) {
     EOBLIO
 }
 
-sub publish ($target_img, $target_txt, $basename) {
-   chdir($target_img.dirname);
+sub publish ( $target_img, $target_txt, $basename ) {
+   chdir( $target_img.dirname );
    my @commands =
        "git add $target_img $target_txt",
        "git commit -m 'potd $basename'",
@@ -68,10 +70,10 @@ sub publish ($target_img, $target_txt, $basename) {
    }
 }
 
-sub build_local ($blio) {
+sub build_local ( $blio ) {
    chdir( $blio );
-   say "starting to build local website";
+   say   "starting to build local website";
    shell './build_t430 --nosched > /dev/null';
-   say "done building local website";
+   say   "done building local website";
 }
 
