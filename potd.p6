@@ -20,7 +20,7 @@ sub MAIN ( $file, Int :$offset = 1, Bool :$local ) {
 
     my $date = Date.today + $offset;
 
-    my $ok = prompt( "Createing POTD for $date, ok? " );
+    my $ok = prompt "Creating POTD for $date, ok? ";
     exit if $ok ~~ m:i/^n/;
 
     my $home       = File::HomeDir.new.my_home.IO;
@@ -30,7 +30,7 @@ sub MAIN ( $file, Int :$offset = 1, Bool :$local ) {
     my $archive    = $home.child( 'media/fotos/2015/potd/' ~ $date ~ '.jpg' );
 
     my $template = template( $date );
-    spurt( $target_txt, $template, :createonly );
+    spurt $target_txt, $template, :createonly;
     shell "vim $target_txt";
 
     shell "potd_handle_image.pl $file $target_img $archive";
@@ -54,7 +54,7 @@ sub template ( Date $date ) {
 }
 
 sub publish ( $target_img, $target_txt, $basename ) {
-   chdir( $target_img.dirname );
+   chdir $target_img.dirname;
    my @commands =
        "git add $target_img $target_txt",
        "git commit -m 'potd $basename'",
@@ -65,7 +65,7 @@ sub publish ( $target_img, $target_txt, $basename ) {
 }
 
 sub build_local ( $blio ) {
-   chdir( $blio );
+   chdir $blio;
    say   "starting to build local website";
    shell './build_t430 --nosched > /dev/null';
    say   "done building local website";
