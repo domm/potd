@@ -25,9 +25,8 @@ sub MAIN ( $file, Int :$offset = 1, Bool :$local ) {
 
     my $home       = File::HomeDir.new.my_home.IO;
     my $blio       = $home.child( 'privat/domm.plix.at' );
-    my $potd_src   = $blio.child( 'src/potd' );
-    my $target_img = $potd_src.child( $date ~ '.jpg' );
-    my $target_txt = $potd_src.child( $date ~ '.txt' );
+    my $target_img = $blio.child( 'src/potd/' ~ $date ~ '.jpg' );
+    my $target_txt = $blio.child( 'src/potd/' ~ $date ~ '.txt' );
     my $archive    = $home.child( 'media/fotos/2015/potd/' ~ $date ~ '.jpg' );
 
     if $target_img.e {
