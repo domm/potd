@@ -20,7 +20,7 @@ if ($exif->{Orientation} && $exif->{Orientation} =~ /(\d+)/) {
 }
 
 my $scaled = $image->scale( xpixels => 800 );
-$scaled->write( file => $target );
+$scaled->write( file => $target, jpgquality=>100 );
 
 move( $src, $archive);
 

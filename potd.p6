@@ -1,4 +1,4 @@
-#!/usr/bin/env perl6
+#!/home/domm/rakudo-star-2016.07/install/bin/perl6
 
 # take an jpg and maybe an --offset
 # rename the file to YYYY-MM-DD.jpg
@@ -13,8 +13,6 @@
 #  http://domm.plix.at/perl/2015_01_potd_helper_script.html
 #  http://domm.plix.at/talks/2015_dresden_potd/
 
-use File::HomeDir;
-
 sub MAIN ( $file, Int :$offset = 1, Bool :$local ) {
     die "No such file $file" unless $file.IO.e;
 
@@ -23,11 +21,11 @@ sub MAIN ( $file, Int :$offset = 1, Bool :$local ) {
     my $ok = prompt "Creating POTD for $date, ok? ";
     exit if $ok ~~ m:i/^n/;
 
-    my $home       = File::HomeDir.new.my_home.IO;
+    my $home       = '/home/domm'.IO;
     my $blio       = $home.child( 'privat/domm.plix.at' );
     my $target_img = $blio.child( 'src/potd/' ~ $date ~ '.jpg' );
     my $target_txt = $blio.child( 'src/potd/' ~ $date ~ '.txt' );
-    my $archive    = $home.child( 'media/fotos/2015/potd/' ~ $date ~ '.jpg' );
+    my $archive    = '/mp3/fotos/2016/potd/' ~ $date ~ '.jpg';
 
     my $template = template( $date );
     spurt $target_txt, $template, :createonly;
@@ -41,7 +39,7 @@ sub MAIN ( $file, Int :$offset = 1, Bool :$local ) {
 }
 
 sub template ( Date $date ) {
-    my $publish_datetime = $date ~ 'T10:00:00';
+    my $publish_datetime = $date ~ 'T10:00:00+02';
     return qq:to/EOBLIO/;
     title: 
     tweet: 
